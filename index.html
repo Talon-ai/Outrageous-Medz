@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outrageous Medz | Elite Cannabis Boutique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* BRAND COLOR SYSTEM - MODERN CLINICAL LUXURY */
+            --primary-emerald: #28A745;
+            --pure-white: #FFFFFF;
+            --light-grey: #F8F9FA;
+            --border-grey: #E9ECEF;
+            --text-dark: #333333;
+            --text-muted: #6C757D;
+            --gold-accent: #D4AF37;
+            
+            /* LUXURY ADDITIONS */
+            --deep-charcoal: #121212;
+            --luxury-gold: #C8A45B;
+            --soft-white: #F2F2F2;
+            
+            /* UI Mapping */
+            --primary-accent: var(--primary-emerald);
+            --bg-dark: var(--pure-white);
+            --bg-light: var(--light-grey);
+            --text-on-dark: var(--text-dark);
+            --text-on-light: var(--text-dark);
+            --border-subtle: var(--border-grey);
+            
+            /* Functional Vars */
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--pure-white); 
+            color: var(--text-dark); 
+            font-family: 'Montserrat', sans-serif; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Responsive Images Global */
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* --- Age Verification --- */
+        #age-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--pure-white); 
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease;
+            padding: 20px;
+        }
+        .gate-content { 
+            text-align: center; max-width: 500px; width: 100%; padding: 40px 20px; 
+            background: var(--pure-white);
+            border-radius: 8px; border: 1px solid var(--border-grey);
+            box-shadow: var(--shadow-lg);
+        }
+        .gate-content h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 8vw, 2.5rem); color: var(--primary-emerald); margin-bottom: 20px; letter-spacing: 2px; }
+        .gate-buttons { display: flex; gap: 15px; margin-top: 40px; flex-wrap: wrap; }
+        .btn-gate { flex: 1; min-width: 140px; padding: 18px; border-radius: 4px; border: 2px solid var(--primary-emerald); font-weight: 700; cursor: pointer; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+        .btn-yes { background: var(--primary-emerald); color: var(--pure-white); }
+        .btn-no { background: transparent; color: var(--primary-emerald); }
+        .btn-gate:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2); }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 90px;
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-grey);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 6%; z-index: 1000; transition: var(--transition);
+        }
+        nav.scrolled { height: 70px; box-shadow: var(--shadow-sm); }
+        .logo { font-family: 'Montserrat', sans-serif; font-size: clamp(1rem, 4vw, 1.4rem); font-weight: 800; color: var(--primary-emerald); text-decoration: none; letter-spacing: 1px; flex-shrink: 0; }
+        .nav-links { display: flex; gap: clamp(10px, 3vw, 30px); }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary-emerald); }
+        .nav-icons { display: flex; gap: clamp(10px, 2vw, 20px); align-items: center; }
+        .cart-trigger { position: relative; cursor: pointer; color: var(--primary-emerald); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; white-space: nowrap; }
+        .cart-count { background: var(--primary-emerald); color: #fff; font-size: 0.65rem; padding: 2px 7px; border-radius: 50%; margin-left: 2px; }
+        .btn-login { background: transparent; border: 2px solid var(--primary-emerald); color: var(--primary-emerald); padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.7rem; transition: var(--transition); text-transform: uppercase; }
+        .btn-login:hover { background: var(--primary-emerald); color: var(--pure-white); }
+
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            nav { padding: 0 4%; }
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 80vh; background: var(--bg-light); 
+            display: flex; align-items: center; padding: 60px 8%; position: relative; overflow: hidden;
+            margin-top: 90px;
+        }
+        .hero-content { max-width: 700px; z-index: 2; position: relative; }
+        .hero-tag { color: var(--primary-emerald); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 20px; display: block; }
+        .hero h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(2.2rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 25px; color: var(--text-dark); }
+        .hero p { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); margin-bottom: 40px; max-width: 550px; font-weight: 400; }
+        .hero-image { 
+            position: absolute; right: 5%; top: 10%; width: 40%; height: 80%; 
+            border-radius: 12px; z-index: 1; box-shadow: var(--shadow-lg); 
+            transition: var(--transition);
+        }
+        .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+        
+        @media (max-width: 1024px) {
+            .hero-image { width: 35%; height: 60%; top: 20%; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 40px 6%; text-align: center; justify-content: center; min-height: 60vh; }
+            .hero-content { max-width: 100%; }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .hero-image { display: none; }
+        }
+
+        /* --- Catalog & Controls --- */
+        .catalog-header { padding: 80px 6% 30px; background: var(--pure-white); text-align: center; }
+        .catalog-controls {
+            background: var(--pure-white); padding: 20px 6%; 
+            position: sticky; top: 90px;
+            z-index: 900;
+            display: flex; flex-direction: column; gap: 20px; border-bottom: 1px solid var(--border-grey);
+        }
+        nav.scrolled + .catalog-controls { top: 70px; }
+        
+        .search-input {
+            width: 100%; padding: 15px 25px; border-radius: 8px; border: 1px solid var(--border-grey);
+            background: var(--bg-light); color: var(--text-dark); outline: none; transition: var(--transition); font-family: inherit; font-size: 1rem;
+        }
+        .search-input:focus { border-color: var(--primary-emerald); background: var(--pure-white); box-shadow: 0 0 10px rgba(40, 167, 69, 0.1); }
+        
+        .filter-group { 
+            display: flex; gap: 10px; justify-content: center; overflow-x: auto; padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .filter-group::-webkit-scrollbar { display: none; }
+
+        .filter-btn { 
+            padding: 10px 20px; background: var(--bg-light); border: 1px solid var(--border-grey);
+            border-radius: 50px; color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 0.7rem; 
+            transition: var(--transition); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+        }
+        .filter-btn.active { background: var(--primary-emerald); color: var(--pure-white); border-color: var(--primary-emerald); }
+
+        /* --- Product Cards --- */
+        .shop-container { padding: 40px 6%; background: var(--pure-white); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        
+        .product-card { 
+            background: var(--pure-white); border-radius: 12px; transition: var(--transition); 
+            position: relative; overflow: hidden; border: 1px solid var(--border-grey); display: flex; flex-direction: column;
+            height: 100%;
+        }
+        .product-card.hidden { display: none; }
+        
+        .product-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-emerald);
+        }
+
+        .img-wrap { width: 100%; height: 260px; overflow: hidden; background: var(--bg-light); position: relative; }
+        .img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .product-card:hover .img-wrap img { transform: scale(1.08); }
+        
+        .stock-badge {
+            position: absolute; top: 15px; right: 15px; background: rgba(40, 167, 69, 0.9);
+            color: #fff; padding: 4px 10px; font-size: 0.6rem; font-weight: 800; border-radius: 30px;
+            z-index: 2; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .badge { 
+            position: absolute; top: 15px; left: 15px; background: var(--gold-accent); color: #fff; 
+            padding: 6px 14px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; z-index: 2; border-radius: 4px;
+        }
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .card-category { color: var(--primary-emerald); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; }
+        .card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); line-height: 1.3; }
+        
+        .btn-add-main { 
+            width: 100%; padding: 15px; background: var(--primary-emerald); border: none; color: var(--pure-white); 
+            font-weight: 700; border-radius: 6px; cursor: pointer; transition: var(--transition); font-size: 0.8rem; text-transform: uppercase;
+            margin-top: auto;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+
+        /* --- Selection Modal --- */
+        #selection-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.98); z-index: 4000; display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .selection-box {
+            background: var(--pure-white); padding: clamp(20px, 5vw, 40px); border: 1px solid var(--border-grey); 
+            width: 100%; max-width: 400px; border-radius: 12px; box-shadow: var(--shadow-lg); text-align: center;
+        }
+        .modal-price-selector { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 25px; }
+        .modal-price-opt { 
+            padding: 15px; background: var(--bg-light); border: 1px solid var(--border-grey);
+            border-radius: 8px; cursor: pointer; font-weight: 700; color: var(--text-dark);
+            transition: var(--transition); font-size: 0.9rem;
+        }
+        .modal-price-opt:hover { border-color: var(--primary-emerald); background: var(--pure-white); color: var(--primary-emerald); }
+
+        /* --- Membership --- */
+        .section-title { font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--text-dark); text-align: center; margin-bottom: 40px; }
+        .membership-signup { padding: 80px 6%; background: var(--bg-light); }
+        .glass-panel {
+            background: var(--pure-white); border: 1px solid var(--border-grey);
+            padding: clamp(30px, 8vw, 60px); max-width: 800px; margin: 0 auto; border-radius: 12px; box-shadow: var(--shadow-sm);
+        }
+        .member-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .member-form input { padding: 15px; background: var(--bg-light); border: 1px solid var(--border-grey); color: var(--text-dark); outline: none; border-radius: 6px; width: 100%; }
+        .strength-container { grid-column: span 2; margin-top: -5px; }
+        .strength-bar { height: 4px; background: var(--border-grey); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+        .strength-fill { height: 100%; width: 0%; transition: width 0.3s ease; background: #ff4757; }
+        .checkbox-group { grid-column: span 2; display: flex; align-items: flex-start; gap: 10px; font-size: 0.75rem; color: var(--text-muted); margin: 10px 0; text-align: left; }
+        .checkbox-group input { width: auto; margin-top: 3px; }
+        .member-form button { grid-column: span 2; padding: 18px; background: var(--primary-emerald); color: #fff; border: none; font-weight: 700; border-radius: 6px; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; }
+
+        @media (max-width: 600px) {
+            .member-form { grid-template-columns: 1fr; }
+            .member-form input, .strength-container, .checkbox-group, .member-form button { grid-column: span 1; }
+        }
+
+        /* --- LUXURY COLLECTIVE SECTION --- */
+        .collective-hero {
+            background: var(--bg-light);
+            padding: 80px 6%;
+            text-align: center;
+            color: var(--text-dark);
+            border-top: 1px solid var(--border-grey);
+        }
+        .collective-hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+            color: var(--primary-emerald);
+        }
+        .collective-hero p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .btn-gold-outline {
+            display: inline-block;
+            padding: 16px 40px;
+            border: 2px solid var(--primary-emerald);
+            color: var(--primary-emerald);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+        .btn-gold-outline:hover {
+            background: var(--primary-emerald);
+            color: var(--pure-white);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* --- FEATURE BLOCKS --- */
+        .feature-grid {
+            background: var(--pure-white);
+            padding: 60px 6%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            border-top: 1px solid var(--border-grey);
+        }
+        .feature-item { text-align: center; padding: 20px; }
+        .feature-icon { font-size: 2rem; color: var(--primary-emerald); margin-bottom: 20px; display: block; }
+        .feature-item h3 { color: var(--text-dark); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .feature-item p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; }
+
+        @media (max-width: 900px) {
+            .feature-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        /* --- LUXURY FOOTER --- */
+        .luxury-footer {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            padding: 80px 6% 40px;
+            border-top: 1px solid var(--border-grey);
+        }
+        .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .footer-col h4 {
+            color: var(--primary-emerald);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .footer-col ul a:hover { color: var(--primary-emerald); padding-left: 5px; }
+        .footer-brand { text-align: left; }
+        .footer-brand .logo { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+        .footer-tagline { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--text-muted); }
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--border-grey);
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 992px) {
+            .footer-cols { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 500px) {
+            .footer-cols { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand { text-align: center; }
+        }
+
+        /* --- Login Modal --- */
+        #login-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.98); z-index: 3000; display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .login-box {
+            background: var(--pure-white); padding: clamp(30px, 8vw, 50px); border: 1px solid var(--border-grey); 
+            width: 100%; max-width: 450px; position: relative; border-radius: 12px; box-shadow: var(--shadow-lg);
+        }
+        .modal-tabs { display: flex; margin-bottom: 30px; border-bottom: 2px solid var(--border-grey); }
+        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 700; color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; }
+        .tab.active { color: var(--primary-emerald); border-bottom: 3px solid var(--primary-emerald); }
+        .login-input { width: 100%; padding: 15px; background: var(--bg-light); border: 1px solid var(--border-grey); border-radius: 6px; margin-bottom: 15px; outline: none; font-size: 1rem; }
+
+        /* --- Floating UI --- */
+        #mini-cart {
+            position: fixed; bottom: 20px; right: 20px; background: var(--primary-emerald); color: #fff;
+            padding: 12px 25px; font-weight: 700; border-radius: 50px; box-shadow: var(--shadow-lg);
+            z-index: 1001; display: none; align-items: center; gap: 15px; cursor: pointer;
+            font-size: 0.85rem;
+        }
+        #cart-drawer {
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 500px; height: 100%;
+            background: var(--pure-white); z-index: 2000; transition: var(--transition);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05); padding: 40px 30px; display: flex; flex-direction: column;
+            border-left: 1px solid var(--border-grey);
+            overflow-y: auto;
+        }
+        #cart-drawer.active { right: 0; }
+        #cart-items-list { flex: 0 0 auto !important; max-height: 210px; margin-bottom: 18px; }
+        .checkout-btn { background: var(--primary-emerald); color: #fff; border:none; padding: 18px; font-weight: 700; border-radius: 6px; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; }
+        .checkout-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .checkout-panel { border-top: 2px solid var(--border-grey); padding-top: 24px; margin-top: 18px; }
+        .checkout-title { color: var(--text-dark); font-weight: 800; font-size: 1rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .checkout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .checkout-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+        .checkout-field.full { grid-column: 1 / -1; }
+        .checkout-field label { color: var(--text-muted); font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .checkout-field input,
+        .checkout-field select,
+        .checkout-field textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--border-grey);
+            border-radius: 6px;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            outline: none;
+            font-size: 0.92rem;
+        }
+        .checkout-field textarea { min-height: 86px; resize: vertical; }
+        .checkout-field input:focus,
+        .checkout-field select:focus,
+        .checkout-field textarea:focus { border-color: var(--primary-emerald); background: var(--pure-white); }
+        .checkout-check { display: flex; align-items: flex-start; gap: 10px; color: var(--text-muted); font-size: 0.78rem; line-height: 1.45; margin: 4px 0 16px; }
+        .checkout-check input { margin-top: 3px; accent-color: var(--primary-emerald); }
+        .cart-line { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border-grey); }
+        .cart-line h4 { font-size: 0.9rem; color: var(--text-dark); font-weight: 700; }
+        .cart-line p { font-size: 0.8rem; color: var(--primary-emerald); font-weight: 600; margin-top: 3px; }
+        .cart-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { width: 28px; height: 28px; border: 1px solid var(--border-grey); border-radius: 6px; background: var(--pure-white); color: var(--text-dark); font-weight: 800; }
+        .remove-btn { border: none; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+        .checkout-status {
+            display: none;
+            padding: 16px;
+            margin-top: 16px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-grey);
+            border-left: 4px solid var(--primary-emerald);
+            border-radius: 6px;
+            color: var(--text-dark);
+            font-size: 0.86rem;
+        }
+        .checkout-status.active { display: block; }
+        .checkout-status h4 { color: var(--primary-emerald); font-size: 1rem; margin-bottom: 8px; }
+        .checkout-status pre { white-space: pre-wrap; font-family: inherit; margin-top: 12px; color: var(--text-muted); line-height: 1.5; }
+        .checkout-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+        .secondary-checkout-btn {
+            border: 1px solid var(--primary-emerald);
+            background: transparent;
+            color: var(--primary-emerald);
+            padding: 13px;
+            border-radius: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 0.78rem;
+        }
+        .empty-cart-note { color: var(--text-muted); font-size: 0.9rem; padding: 20px 0; }
+        
+        /* Reveal Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .social-float {
+            position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px; z-index: 1001;
+        }
+        .social-icon {
+            width: 45px; height: 45px; background: var(--pure-white); border: 1px solid var(--border-grey);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; color: var(--primary-emerald); font-weight: 800; font-size: 1.2rem;
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .social-icon:hover { background: var(--primary-emerald); color: #fff; transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            .social-float { top: auto; bottom: 80px; left: 20px; transform: none; }
+            .checkout-grid, .checkout-actions { grid-template-columns: 1fr; }
+            #cart-drawer { padding: 32px 22px; }
+        }
+
+        #back-to-top {
+            position: fixed; bottom: 80px; right: 20px; width: 45px; height: 45px;
+            background: var(--text-dark); color: #fff; border-radius: 50%;
+            display: none; align-items: center; justify-content: center; cursor: pointer;
+            z-index: 1000; transition: var(--transition); font-weight: 800;
+        }
+        #back-to-top.visible { display: flex; }
+
+        #toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--text-dark); color: #fff; padding: 12px 30px; border-radius: 4px;
+            font-weight: 600; font-size: 0.8rem; z-index: 9999; transition: transform 0.4s ease;
+            width: 90%; max-width: 400px; text-align: center;
+        }
+        #toast.active { transform: translateX(-50%) translateY(0); }
+
+        /* --- New Catalog Section Styles --- */
+        .catalog-section { display: block; margin-bottom: 60px; }
+        .catalog-section.hidden { display: none; }
+
+        .section-subtitle-bar {
+            font-size: clamp(1.4rem, 4vw, 1.8rem); 
+            text-align: left; 
+            border-left: 4px solid var(--primary-emerald); 
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="toast">Added to bag successfully</div>
+
+<div class="social-float">
+    <a href="https://wa.me/27643077572" class="social-icon" title="WhatsApp">W</a>
+</div>
+
+<div id="back-to-top" onclick="window.scrollTo(0,0)">↑</div>
+
+<div id="age-gate">
+    <div class="gate-content">
+        <h1>OUTRAGEOUS MEDZ</h1>
+        <p style="color: var(--primary-emerald); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;">MODERN BOTANICAL BOUTIQUE | EST. 2026</p>
+        <p style="margin-top: 25px; font-weight: 400; color: var(--text-muted);">This clinical collection is reserved for adults 18+.</p>
+        <div class="gate-buttons">
+            <button class="btn-gate btn-yes" onclick="verifyAge()">Access Boutique</button>
+            <button class="btn-gate btn-no" onclick="window.location.href='https://google.com'">Exit</button>
+        </div>
+    </div>
+</div>
+
+<div id="selection-modal">
+    <div class="selection-box">
+        <span style="float:right; cursor:pointer; color: var(--text-muted); font-size: 1.5rem; line-height: 1;" onclick="toggleSelectionModal()">✕</span>
+        <h2 id="modal-product-title" style="color: var(--primary-emerald); margin-bottom: 5px; clear: both;">Product Name</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Select your preferred quantity</p>
+        <div id="modal-options-container" class="modal-price-selector"></div>
+    </div>
+</div>
+
+<div id="login-modal">
+    <div class="login-box">
+        <span style="position:absolute; top:20px; right:20px; cursor:pointer; color: var(--text-muted); font-size: 1.5rem;" onclick="toggleLogin()">✕</span>
+        <div class="modal-tabs">
+            <div class="tab active" onclick="switchTab('signin')">Sign In</div>
+            <div class="tab" onclick="switchTab('register')">Register</div>
+        </div>
+        <div id="signin-fields">
+            <input type="email" class="login-input" placeholder="Email Address">
+            <input type="password" class="login-input" placeholder="Password">
+            <button class="btn-gate btn-yes" style="width:100%" onclick="alert('Verification required.')">Sign In</button>
+        </div>
+        <div id="register-fields" style="display:none;">
+            <input type="text" class="login-input" placeholder="Full Name">
+            <input type="email" class="login-input" placeholder="Email Address">
+            <input type="password" class="login-input" id="regPassword" placeholder="Create Password" onkeyup="checkStrength(this.value)">
+            <div class="strength-container">
+                <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms"> <label for="terms">I agree to the Terms & Verify I am 18+</label>
+            </div>
+            <button class="btn-gate btn-yes" style="width:100%" onclick="alert('Application Sent.')">Create Account</button>
+        </div>
+    </div>
+</div>
+
+<nav id="navbar">
+    <a href="#" class="logo">OUTRAGEOUS MEDZ</a>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#shop">Collection</a>
+        <a href="#membership">Membership</a>
+    </div>
+    <div class="nav-icons">
+        <button class="btn-login" onclick="toggleLogin()">Sign In</button>
+        <div class="cart-trigger" onclick="toggleCart()">
+            BAG <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content reveal">
+        <span class="hero-tag">Clinical Grade Luxury</span>
+        <h1>A Higher Standard of Botanical Care.</h1>
+        <p>Expertly curated greenhouse and indoor harvests, delivered with professional discretion and pharmaceutical precision.</p>
+        <button class="btn-gate btn-yes" style="padding: 20px 45px; width:auto;" onclick="document.getElementById('shop').scrollIntoView()">Shop The Collection</button>
+    </div>
+    <div class="hero-image">
+        <img src="WhatsApp Image 2026-02-26 at 17.12.36.jpeg" alt="Official Update 1">
+    </div>
+</section>
+
+<div class="catalog-header" id="shop">
+    <span class="hero-tag">March 2026 Menu</span>
+    <h2 class="section-title">The Boutique Collection</h2>
+</div>
+
+<div class="catalog-controls">
+    <div class="search-container">
+        <input type="text" class="search-input" id="productSearch" placeholder="Search by strain, effect, or category..." onkeyup="filterProducts()">
+    </div>
+    <div class="filter-group">
+        <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+        <button class="filter-btn" onclick="filterMenu('weed', this)">Weed Collection</button>
+        <button class="filter-btn" onclick="filterMenu('edibles', this)">Edibles Collection</button>
+        <button class="filter-btn" onclick="filterMenu('bulk', this)">Power Packages</button>
+        <button class="filter-btn" onclick="filterMenu('instore', this)">In-Store Essentials</button>
+    </div>
+</div>
+
+<section class="shop-container">
+
+    <div id="section-weed" class="catalog-section">
+        <h2 class="section-subtitle-bar">Weed Collection</h2>
+        <div class="grid" id="main-grid">
+            
+            <div class="product-card reveal" data-cat="outdoor" data-options='[{"w":"50g", "p":150}, {"w":"100g", "p":250}, {"w":"200g", "p":450}, {"w":"500g", "p":1000}]'>
+                <span class="badge">A Grade Outdoor</span>
+                <div class="img-wrap"><img src="deathstar.jpg" alt="Super Silver Haze"></div>
+                <div class="card-body">
+                    <span class="card-category">Outdoor Selection</span>
+                    <h3 class="card-title">Super Silver Haze</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Super Silver Haze')">Add to Bag</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-cat="greenhouse" data-options='[{"w":"10g", "p":80}, {"w":"25g", "p":200}, {"w":"50g", "p":390}, {"w":"100g", "p":680}]'>
+                <div class="img-wrap"><img src="greengoblin.jpg" alt="Super Lemon Haze"></div>
+                <div class="card-body">
+                    <span class="card-category">Greenhouse Special</span>
+                    <h3 class="card-title">Super Lemon Haze</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Super Lemon Haze')">Add to Bag</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-cat="greenhouse" data-options='[{"w":"37g", "p":350}, {"w":"60g", "p":550}, {"w":"120g", "p":1000}, {"w":"500g", "p":3500}]'>
+                <span class="badge" style="background: var(--primary-emerald);">Premium</span>
+                <div class="img-wrap"><img src="gelato.jpg" alt="Mango Haze"></div>
+                <div class="card-body">
+                    <span class="card-category">Premium Greenhouse</span>
+                    <h3 class="card-title">Mango Haze</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Mango Haze')">Add to Bag</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-cat="greenhouse" data-options='[{"w":"5g", "p":150}, {"w":"10g", "p":250}, {"w":"20g", "p":450}, {"w":"50g", "p":1000}]'>
+                <span class="badge">Exotic</span>
+                <div class="img-wrap"><img src="Cali-Orange.webp" alt="Maui Wowie"></div>
+                <div class="card-body">
+                    <span class="card-category">Exotic Greenhouse</span>
+                    <h3 class="card-title">Maui Wowie</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Maui Wowie')">Add to Bag</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-cat="greenhouse" data-options='[{"w":"5g", "p":250}, {"w":"10g", "p":480}, {"w":"20g", "p":900}, {"w":"50g", "p":1500}]'>
+                <span class="badge" style="background:#007bff;">Aquaponic</span>
+                <div class="img-wrap"><img src="lemoncherry.jpg" alt="Gelato"></div>
+                <div class="card-body">
+                    <span class="card-category">Aquaponic Greenhouse</span>
+                    <h3 class="card-title">Gelato</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Gelato')">Add to Bag</button>
+                </div>
+            </div>
+
+            <div class="product-card reveal" data-cat="indoor" data-options='[{"w":"1g", "p":100}, {"w":"5g", "p":450}, {"w":"10g", "p":750}, {"w":"20g", "p":1450}]'>
+                <span class="badge" style="background:#343a40;">Elite Indoor</span>
+                <div class="img-wrap"><img src="icee.png" alt="Jack Herer"></div>
+                <div class="card-body">
+                    <span class="card-category">A Grade Indoor</span>
+                    <h3 class="card-title">Jack Herer</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Jack Herer')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section-edibles" class="catalog-section">
+        <h2 class="section-subtitle-bar">Edibles & Shrooms</h2>
+        <div class="grid">
+            <div class="product-card reveal" data-cat="edibles" data-options='[{"w":"Single Pack", "p":50}]'>
+                <div class="img-wrap"><img src="chochip.jpg" alt="Cookies"></div>
+                <div class="card-body">
+                    <span class="card-category">Bakery</span>
+                    <h3 class="card-title">Choc-chip Cookies</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Choc-chip Cookies')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="shrooms" data-options='[{"w":"1g", "p":70}, {"w":"10g", "p":550}, {"w":"20g", "p":1050}]'>
+                <div class="img-wrap"><img src="colorful-gummies-on-white-background.jpg" alt="Blue Meanies"></div>
+                <div class="card-body">
+                    <span class="card-category">Shrooms</span>
+                    <h3 class="card-title">Blue Meanies</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Blue Meanies')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="section-bulk" class="catalog-section">
+        <h2 class="section-subtitle-bar">Power Packages</h2>
+        <div class="grid">
+            <div class="product-card reveal" data-cat="bulk" data-options='[{"w":"Table Mountain", "p":300}]'>
+                <span class="badge">Value</span>
+                <div class="img-wrap"><img src="box1.png" alt="Table Mountain"></div>
+                <div class="card-body">
+                    <span class="card-category">Bundles</span>
+                    <h3 class="card-title">Table Mountain Pack</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Table Mountain Pack')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="bulk" data-options='[{"w":"Himalayas", "p":1400}]'>
+                <span class="badge">Elite</span>
+                <div class="img-wrap"><img src="box.png" alt="Himalayas"></div>
+                <div class="card-body">
+                    <span class="card-category">Bundles</span>
+                    <h3 class="card-title">Himalayas Pack</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Himalayas Pack')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="bulk" data-options='[{"w":"Mount Everest", "p":1750}]'>
+                <span class="badge">Ultimate</span>
+                <div class="img-wrap"><img src="box3.png" alt="Mount Everest"></div>
+                <div class="card-body">
+                    <span class="card-category">Bundles</span>
+                    <h3 class="card-title">Mount Everest Pack</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Mount Everest Pack')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div id="section-instore" class="catalog-section">
+        <h2 class="section-subtitle-bar">In-Store Essentials</h2>
+        <div class="grid">
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":100}, {"w":"2 Units", "p":200}]'>
+                <div class="img-wrap">
+                    <img src="20.jpeg" alt="Ash Tray">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Ash Tray (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Ash Tray')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="11.jpeg" alt="Tobacco Pipe">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Tobacco Pipe (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Tobacco Pipe')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":50}]'>
+                <div class="img-wrap">
+                    <img src="12.jpeg" alt="Plastic Crusher">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Plastic Crusher</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Plastic Crusher')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="13.jpeg" alt="Classic Storage Container">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Classic Storage Container (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Classic Storager Container')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":250}]'>
+                <div class="img-wrap">
+                    <img src="14.jpeg" alt="Rolling/ Crusher Compating Decive">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Rolling/ Crusher Compating Decive</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Rolling/ Crusher Compating Decive')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":20}]'>
+                <div class="img-wrap">
+                    <img src="15.jpeg" alt="Rolling Papers">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Rolling Papers</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Rolling Papers')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="16.jpeg" alt="Cookies Storage Container">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Cookies Storage Container (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Cookies Storage Container')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="17.jpeg" alt="Bunt Wraps">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Bunt Wraps(Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Bunt Wraps')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="18.jpeg" alt="Filters">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Filters (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, 'Filters')">Add to Bag</button>
+                </div>
+            </div>
+            <div class="product-card reveal" data-cat="instore" data-options='[{"w":"1 Unit", "p":0}]'>
+                <div class="img-wrap">
+                    <img src="19.jpeg" alt="Metal Crusher">
+                </div>
+                <div class="card-body">
+                    <span class="card-category">Accessories</span>
+                    <h3 class="card-title">Metal Crusher (Coming Soon)</h3>
+                    <button class="btn-add-main" onclick="handleAddToCart(this, '<etal Crusher>')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="membership-signup" id="membership">
+    <div class="glass-panel reveal">
+        <span class="hero-tag" style="text-align: center;">Private Club</span>
+        <h2 class="section-title" style="margin-bottom: 20px;">Become a Member</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 35px;">Apply for exclusive access to priority boutique releases and limited harvest reserves.</p>
+        <div class="member-form">
+            <input type="text" placeholder="Full Name">
+            <input type="email" placeholder="Email Address">
+            <input type="tel" placeholder="Phone Number">
+            <input type="password" placeholder="Create Password" onkeyup="checkStrength(this.value)">
+            <div class="strength-container">
+                <div class="strength-bar"><div class="strength-fill" id="strength-fill-main"></div></div>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox"> <label>I agree to terms and confirm I am 18+</label>
+            </div>
+            <button onclick="alert('Thank you for applying. Our concierge will be in touch.')">Submit Application</button>
+        </div>
+    </div>
+</section>
+
+<section class="collective-hero reveal">
+    <div class="reveal">
+        <h2>Join Our Collective</h2>
+        <p>Members gain exclusive access to premium boutique releases, limited indoor harvests, and member-only pharmaceutical specials. Experience the higher standard.</p>
+        <p style="font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 40px; color: var(--primary-emerald);">Membership is Free</p>
+        <a href="#membership" class="btn-gold-outline">Join the Collective</a>
+    </div>
+</section>
+
+<section class="feature-grid reveal">
+    <div class="feature-item">
+        <span class="feature-icon">✧</span>
+        <h3>Premium Products</h3>
+        <p>Access to high-quality cannabis products available exclusively through our curated botanical store.</p>
+    </div>
+    <div class="feature-item">
+        <span class="feature-icon">◈</span>
+        <h3>Member Benefits</h3>
+        <p>Exclusive promotions, seasonal discounts, and early access to our limited greenhouse harvests.</p>
+    </div>
+    <div class="feature-item">
+        <span class="feature-icon">♛</span>
+        <h3>Special Rewards</h3>
+        <p>Loyalty rewards for our regular patrons, curated giveaways, and surprise boutique gifts.</p>
+    </div>
+</section>
+
+<footer class="luxury-footer">
+    <div class="footer-cols">
+        <div class="footer-col">
+            <h4>Shop</h4>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Menu</a></li>
+                <li><a href="#membership">About</a></li>
+                <li><a href="https://wa.me/27643077572">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Products</h4>
+            <ul>
+                <li><a href="#section-weed">Cannabis</a></li>
+                <li><a href="#section-edibles">Edibles</a></li>
+                <li><a href="#section-wellness">Shrooms</a></li>
+                <li><a href="#section-bulk">Packages</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Information</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-col footer-brand">
+            <div class="logo">OUTRAGEOUS MEDZ</div>
+            <div class="footer-tagline">Botanical Boutique</div>
+            <div style="margin-top: 20px; color: var(--primary-emerald); font-size: 1.2rem; font-weight: 800;">
+                EST. 2026
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        Copyright © 2026 Outrageous Medz. All Rights Reserved.
+    </div>
+</footer>
+
+<div id="mini-cart" onclick="toggleCart()">
+    <span id="mini-cart-qty">0 Items</span>
+    <span style="opacity:0.3">|</span>
+    <span id="mini-cart-total">R0</span>
+</div>
+
+<div id="cart-drawer">
+    <div style="display:flex; justify-content:space-between; margin-bottom:40px; align-items: center;">
+        <h2 style="font-weight:800; color: var(--primary-emerald); font-size: 1.8rem;">Your Bag</h2>
+        <span style="cursor:pointer; font-weight:700; color: var(--text-muted); letter-spacing: 1px; font-size: 0.8rem;" onclick="toggleCart()">CLOSE</span>
+    </div>
+    <div id="cart-items-list" style="flex:1; overflow-y:auto;"></div>
+    <div style="border-top: 2px solid var(--border-grey); padding-top:24px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:30px; font-weight:800; font-size:1.4rem;">
+            <span style="color: var(--text-dark);">Estimated Total</span>
+            <span id="cart-total" style="color:var(--primary-emerald);">R0</span>
+        </div>
+        <div class="checkout-panel">
+            <div class="checkout-title">Checkout Details</div>
+            <form id="checkout-form" onsubmit="submitCheckout(event)">
+                <div class="checkout-grid">
+                    <div class="checkout-field">
+                        <label for="checkoutName">Full Name</label>
+                        <input id="checkoutName" name="name" autocomplete="name" required>
+                    </div>
+                    <div class="checkout-field">
+                        <label for="checkoutPhone">WhatsApp Number</label>
+                        <input id="checkoutPhone" name="phone" autocomplete="tel" required>
+                    </div>
+                    <div class="checkout-field full">
+                        <label for="checkoutAddress">Delivery Address / Area</label>
+                        <input id="checkoutAddress" name="address" autocomplete="street-address" required>
+                    </div>
+                    <div class="checkout-field">
+                        <label for="checkoutPayment">Payment Method</label>
+                        <select id="checkoutPayment" name="payment" required>
+                            <option value="EFT / bank transfer">EFT / bank transfer</option>
+                            <option value="Cash deposit">Cash deposit</option>
+                            <option value="Cash on delivery">Cash on delivery</option>
+                            <option value="Confirm with seller">Confirm with seller</option>
+                        </select>
+                    </div>
+                    <div class="checkout-field">
+                        <label for="checkoutDelivery">Delivery Timing</label>
+                        <select id="checkoutDelivery" name="delivery" required>
+                            <option value="Earliest available">Earliest available</option>
+                            <option value="Today if available">Today if available</option>
+                            <option value="Tomorrow">Tomorrow</option>
+                            <option value="Confirm with seller">Confirm with seller</option>
+                        </select>
+                    </div>
+                    <div class="checkout-field full">
+                        <label for="checkoutNotes">Notes</label>
+                        <textarea id="checkoutNotes" name="notes" placeholder="Optional delivery note, substitution preference, or landmark"></textarea>
+                    </div>
+                </div>
+                <label class="checkout-check">
+                    <input id="checkoutAdult" type="checkbox" required>
+                    <span>I confirm I am 18+ and understand this order is confirmed after stock and payment are verified.</span>
+                </label>
+                <button class="checkout-btn" id="checkoutSubmit" type="submit" style="width:100%">Place Order</button>
+            </form>
+            <div class="checkout-status" id="checkoutStatus" aria-live="polite"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const WHATSAPP_NUMBER = '27643077572';
+    const ORDER_STORAGE_KEY = 'om-cart-v3';
+    const BANK_PAYMENT_DETAILS = {
+        accountName: '',
+        bankName: '',
+        accountNumber: '',
+        branchCode: ''
+    };
+    let cart = loadCart();
+    let lastOrderMessage = '';
+    let lastWhatsAppUrl = '';
+
+    function loadCart() {
+        try {
+            const savedCart = JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY) || '[]');
+            if (!Array.isArray(savedCart)) return [];
+            return savedCart
+                .filter(item => item && typeof item.name === 'string' && Number(item.price) >= 0 && Number(item.qty) > 0)
+                .map(item => ({ name: item.name, price: Number(item.price), qty: Math.max(1, parseInt(item.qty, 10) || 1) }));
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function formatRand(value) {
+        return `R${Number(value).toLocaleString('en-ZA')}`;
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.classList.add('active');
+        setTimeout(() => toast.classList.remove('active'), 2500);
+    }
+
+    function createTextElement(tag, className, text) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        element.textContent = text;
+        return element;
+    }
+
+    function getCartTotals() {
+        return cart.reduce((totals, item) => {
+            totals.items += item.qty;
+            totals.total += item.price * item.qty;
+            return totals;
+        }, { items: 0, total: 0 });
+    }
+
+    function verifyAge() {
+        localStorage.setItem('om-verified', 'true');
+        document.getElementById('age-gate').style.opacity = '0';
+        setTimeout(() => document.getElementById('age-gate').style.display = 'none', 600);
+    }
+
+    if(localStorage.getItem('om-verified')) {
+        document.getElementById('age-gate').style.display = 'none';
+    }
+
+    function toggleSelectionModal() {
+        const m = document.getElementById('selection-modal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function handleAddToCart(btn, productName) {
+        const card = btn.closest('.product-card');
+        const options = JSON.parse(card.getAttribute('data-options'));
+        
+        document.getElementById('modal-product-title').innerText = productName;
+        const container = document.getElementById('modal-options-container');
+        container.innerHTML = '';
+        
+        options.forEach(opt => {
+            const div = document.createElement('div');
+            div.className = 'modal-price-opt';
+            div.innerText = `${opt.w} - R${opt.p}`;
+            div.onclick = () => selectPrice(productName, opt.w, opt.p);
+            container.appendChild(div);
+        });
+        
+        toggleSelectionModal();
+    }
+
+    function selectPrice(name, weight, price) {
+        const finalName = weight.includes(name) ? weight : `${name} (${weight})`;
+        addToCart(finalName, price, 1);
+        toggleSelectionModal();
+        showToast(`Added ${finalName} to Bag`);
+    }
+
+    function addToCart(name, price, qty) {
+        const item = cart.find(i => i.name === name);
+        if(item) item.qty += qty;
+        else cart.push({ name, price, qty });
+        renderCart();
+    }
+
+    function removeItem(name) {
+        cart = cart.filter(i => i.name !== name);
+        renderCart();
+    }
+
+    function updateItemQty(name, change) {
+        const item = cart.find(i => i.name === name);
+        if (!item) return;
+        item.qty += change;
+        if (item.qty <= 0) removeItem(name);
+        else renderCart();
+    }
+
+    function renderCart() {
+        localStorage.setItem(ORDER_STORAGE_KEY, JSON.stringify(cart));
+        const list = document.getElementById('cart-items-list');
+        const count = document.getElementById('cart-count');
+        const totalEl = document.getElementById('cart-total');
+        const miniCart = document.getElementById('mini-cart');
+        const checkoutSubmit = document.getElementById('checkoutSubmit');
+        const checkoutStatus = document.getElementById('checkoutStatus');
+        
+        list.replaceChildren();
+        const { items: itemsCount, total } = getCartTotals();
+
+        if (cart.length === 0) {
+            list.appendChild(createTextElement('p', 'empty-cart-note', 'Your bag is empty. Add products before checkout.'));
+        }
+
+        cart.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'cart-line';
+
+            const copy = document.createElement('div');
+            copy.appendChild(createTextElement('h4', '', item.name));
+            copy.appendChild(createTextElement('p', '', `${item.qty} x ${formatRand(item.price)} = ${formatRand(item.price * item.qty)}`));
+
+            const controls = document.createElement('div');
+            controls.className = 'cart-controls';
+
+            const minus = createTextElement('button', 'qty-btn', '-');
+            minus.type = 'button';
+            minus.setAttribute('aria-label', `Decrease ${item.name}`);
+            minus.addEventListener('click', () => updateItemQty(item.name, -1));
+
+            const qty = createTextElement('strong', '', String(item.qty));
+
+            const plus = createTextElement('button', 'qty-btn', '+');
+            plus.type = 'button';
+            plus.setAttribute('aria-label', `Increase ${item.name}`);
+            plus.addEventListener('click', () => updateItemQty(item.name, 1));
+
+            const remove = createTextElement('button', 'remove-btn', 'Remove');
+            remove.type = 'button';
+            remove.addEventListener('click', () => removeItem(item.name));
+
+            controls.append(minus, qty, plus, remove);
+            row.append(copy, controls);
+            list.appendChild(row);
+        });
+
+        count.innerText = itemsCount;
+        totalEl.innerText = formatRand(total);
+        miniCart.style.display = itemsCount > 0 ? 'flex' : 'none';
+        if(itemsCount > 0) {
+            document.getElementById('mini-cart-qty').innerText = `${itemsCount} Items`;
+            document.getElementById('mini-cart-total').innerText = formatRand(total);
+        }
+        if (checkoutSubmit) checkoutSubmit.disabled = itemsCount === 0;
+        if (checkoutStatus) checkoutStatus.classList.remove('active');
+    }
+
+    function checkStrength(password) {
+        let strength = 0;
+        if (password.length > 5) strength += 33;
+        if (password.match(/[A-Z]/)) strength += 33;
+        if (password.match(/[0-9]/)) strength += 34;
+        const fills = [document.getElementById('strength-fill'), document.getElementById('strength-fill-main')];
+        fills.forEach(f => {
+            if(f) {
+                f.style.width = strength + '%';
+                f.style.background = strength < 40 ? '#ff4757' : strength < 80 ? '#ffa502' : '#28A745';
+            }
+        });
+    }
+
+    function filterMenu(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const sections = document.querySelectorAll('.catalog-section');
+
+        sections.forEach(sec => {
+            if(cat === 'all') {
+                sec.classList.remove('hidden');
+            } else {
+                if(sec.id === `section-${cat}`) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            }
+        });
+    }
+
+    function filterProducts() {
+        const input = document.getElementById('productSearch').value.toLowerCase();
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+            const title = card.querySelector('.card-title').innerText.toLowerCase();
+            card.classList.toggle('hidden', !title.includes(input));
+        });
+    }
+
+    function switchTab(type) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById('signin-fields').style.display = type === 'signin' ? 'block' : 'none';
+        document.getElementById('register-fields').style.display = type === 'register' ? 'block' : 'none';
+    }
+
+    function toggleCart() { document.getElementById('cart-drawer').classList.toggle('active'); }
+    function toggleLogin() { 
+        const m = document.getElementById('login-modal');
+        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex'; 
+    }
+
+    function checkoutWhatsApp() {
+        if(cart.length === 0) return alert("Bag is empty.");
+        let msg = "*Boutique Order - Outrageous Medz*%0A%0A";
+        let total = 0;
+        cart.forEach(i => {
+            msg += `• ${i.name} (x${i.qty}) - R${i.price * i.qty}%0A`;
+            total += (i.price * i.qty);
+        });
+        msg += `%0A*TOTAL: R${total}*`;
+        window.open(`https://wa.me/27643077572?text=${msg}`);
+    }
+
+    function makeOrderNumber() {
+        const date = new Date();
+        const stamp = date.toISOString().slice(2, 10).replace(/-/g, '');
+        const suffix = String(date.getTime()).slice(-5);
+        return `OM-${stamp}-${suffix}`;
+    }
+
+    function getPaymentInstructions(method, orderNumber) {
+        if (method === 'Cash on delivery') {
+            return 'Payment selected: cash on delivery. Delivery must still be confirmed before dispatch.';
+        }
+        if (method === 'Cash deposit') {
+            return `Payment selected: cash deposit. Use reference ${orderNumber} when depositing. Send proof of payment before dispatch.`;
+        }
+        if (method === 'Confirm with seller') {
+            return 'Payment selected: confirm with seller. The order summary is ready for the seller to confirm the fastest payment route.';
+        }
+
+        const hasBankDetails = BANK_PAYMENT_DETAILS.bankName && BANK_PAYMENT_DETAILS.accountNumber;
+        if (!hasBankDetails) {
+            return `Payment selected: EFT / bank transfer. Banking details must be configured on the site or sent automatically by the seller. Use reference ${orderNumber}.`;
+        }
+
+        return [
+            'Payment selected: EFT / bank transfer.',
+            `Account name: ${BANK_PAYMENT_DETAILS.accountName}`,
+            `Bank: ${BANK_PAYMENT_DETAILS.bankName}`,
+            `Account number: ${BANK_PAYMENT_DETAILS.accountNumber}`,
+            `Branch code: ${BANK_PAYMENT_DETAILS.branchCode || 'N/A'}`,
+            `Reference: ${orderNumber}`
+        ].join('\n');
+    }
+
+    function buildOrderMessage(orderNumber, formData) {
+        const { total } = getCartTotals();
+        const itemLines = cart.map(item => `- ${item.name} x${item.qty} = ${formatRand(item.price * item.qty)}`);
+        const paymentMethod = formData.get('payment');
+        const paymentInstructions = getPaymentInstructions(paymentMethod, orderNumber);
+
+        return [
+            `*Outrageous Medz Order ${orderNumber}*`,
+            '',
+            '*Customer*',
+            `Name: ${formData.get('name')}`,
+            `WhatsApp: ${formData.get('phone')}`,
+            `Delivery: ${formData.get('address')}`,
+            `Timing: ${formData.get('delivery')}`,
+            '',
+            '*Items*',
+            ...itemLines,
+            '',
+            `*Estimated total: ${formatRand(total)}*`,
+            `Payment method: ${paymentMethod}`,
+            `Notes: ${formData.get('notes') || 'None'}`,
+            '',
+            '*Payment / fulfilment*',
+            paymentInstructions,
+            '',
+            'Status: order placed, pending payment and dispatch confirmation.'
+        ].join('\n');
+    }
+
+    function renderCheckoutStatus(orderNumber, message, whatsappUrl) {
+        const status = document.getElementById('checkoutStatus');
+        status.replaceChildren();
+        status.classList.add('active');
+
+        const heading = createTextElement('h4', '', `Order ready: ${orderNumber}`);
+        const helper = createTextElement('p', '', 'The order is formatted for processing. The customer can pay using the selected method and send the completed order notification.');
+        const summary = createTextElement('pre', '', message);
+        const actions = document.createElement('div');
+        actions.className = 'checkout-actions';
+
+        const whatsApp = createTextElement('button', 'checkout-btn', 'Send Order');
+        whatsApp.type = 'button';
+        whatsApp.addEventListener('click', () => window.open(whatsappUrl, '_blank', 'noopener,noreferrer'));
+
+        const copy = createTextElement('button', 'secondary-checkout-btn', 'Copy Order');
+        copy.type = 'button';
+        copy.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(message);
+                showToast('Order copied');
+            } catch (error) {
+                showToast('Copy failed. Select the order text manually.');
+            }
+        });
+
+        actions.append(whatsApp, copy);
+        status.append(heading, helper, summary, actions);
+    }
+
+    function submitCheckout(event) {
+        event.preventDefault();
+        if (cart.length === 0) {
+            alert('Bag is empty.');
+            return;
+        }
+
+        const form = event.currentTarget;
+        if (!form.reportValidity()) return;
+
+        const orderNumber = makeOrderNumber();
+        const formData = new FormData(form);
+        lastOrderMessage = buildOrderMessage(orderNumber, formData);
+        lastWhatsAppUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lastOrderMessage)}`;
+        renderCheckoutStatus(orderNumber, lastOrderMessage, lastWhatsAppUrl);
+        window.open(lastWhatsAppUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        const btt = document.getElementById('back-to-top');
+        if(window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+        if(window.scrollY > 300) btt.classList.add('visible');
+        else btt.classList.remove('visible');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    renderCart();
+</script>
+
+</body>
+</html>
